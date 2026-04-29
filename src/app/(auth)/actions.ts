@@ -2,36 +2,20 @@
 
 import { redirect } from "next/navigation"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-function validateCredentials(formData: FormData): {
-  email: string
-  password: string
-  error?: string
-} {
-  const email = String(formData.get("email") ?? "").trim().toLowerCase()
-  const password = String(formData.get("password") ?? "")
-
-  if (!email || !EMAIL_RE.test(email)) {
-    return { email, password, error: "invalid_email" }
-  }
-  if (password.length < 8) {
-    return { email, password, error: "weak_password" }
-  }
-  return { email, password }
-}
+import { validateCredentials } from "@/lib/auth/validation"
 
 export async function loginAction(formData: FormData) {
-  const { email, password, error: validationError } =
-    validateCredentials(formData)
+  const result = validateCredentials(formData)
 
-  if (validationError) {
-    redirect(`/login?error=${validationError}`)
+  if (!result.ok) {
+    redirect(`/login?error=${result.error}`)
   }
 
   const supabase = createSupabaseServerClient()
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { error } = await supabase.auth.signInWithPassword({
+    email: result.email,
+    password: result.password,
+  })
 
   if (error) {
     redirect(`/login?error=invalid_credentials`)
@@ -42,19 +26,21 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function signupAction(formData: FormData) {
-  const { email, password, error: validationError } =
-    validateCredentials(formData)
+  const result = validateCredentials(formData)
   const confirm = String(formData.get("confirmPassword") ?? "")
 
-  if (validationError) {
-    redirect(`/signup?error=${validationError}`)
+  if (!result.ok) {
+    redirect(`/signup?error=${result.error}`)
   }
-  if (password !== confirm) {
+  if (result.password !== confirm) {
     redirect(`/signup?error=password_mismatch`)
   }
 
   const supabase = createSupabaseServerClient()
-  const { error } = await supabase.auth.signUp({ email, password })
+  const { error } = await supabase.auth.signUp({
+    email: result.email,
+    password: result.password,
+  })
 
   if (error) {
     redirect(`/signup?error=signup_failed`)
