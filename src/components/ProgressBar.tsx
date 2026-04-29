@@ -13,24 +13,24 @@ const progressBarVariants = tv({
   variants: {
     variant: {
       default: {
-        background: "bg-indigo-100 dark:bg-indigo-500/30",
-        bar: "bg-indigo-600 dark:bg-indigo-500",
+        background: "bg-[var(--accent-soft)]",
+        bar: "bg-[var(--accent)]",
       },
       neutral: {
-        background: "bg-gray-200 dark:bg-gray-500/40",
-        bar: "bg-gray-500 dark:bg-gray-500",
+        background: "bg-surface-3",
+        bar: "bg-fg-faint",
       },
       warning: {
-        background: "bg-yellow-200 dark:bg-yellow-500/30",
-        bar: "bg-yellow-500 dark:bg-yellow-500",
+        background: "bg-[var(--caution-soft)]",
+        bar: "bg-[var(--caution)]",
       },
       error: {
-        background: "bg-red-200 dark:bg-red-500/30",
-        bar: "bg-red-500 dark:bg-red-500",
+        background: "bg-[var(--negative-soft)]",
+        bar: "bg-[var(--negative)]",
       },
       success: {
-        background: "bg-emerald-200 dark:bg-emerald-500/30",
-        bar: "bg-emerald-500 dark:bg-emerald-500",
+        background: "bg-[var(--positive-soft)]",
+        bar: "bg-[var(--positive)]",
       },
     },
   },
@@ -94,9 +94,8 @@ const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
           <span
             className={cx(
               // base
-              "ml-2 whitespace-nowrap text-sm font-medium leading-none",
-              // text color
-              "text-gray-900 dark:text-gray-50",
+              "ml-2 whitespace-nowrap text-sm font-medium leading-none tabular-nums",
+              "text-fg-primary",
             )}
           >
             {label}

@@ -1,20 +1,37 @@
 import type { Metadata } from "next"
 import { ThemeProvider } from "next-themes"
-import { Inter, Plus_Jakarta_Sans } from "next/font/google"
+import {
+  Bricolage_Grotesque,
+  Hanken_Grotesk,
+  JetBrains_Mono,
+} from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css"
 import { siteConfig } from "./siteConfig"
 
-const inter = Inter({
+const hankenGrotesk = Hanken_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-funnel-sans",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
 })
 
-const jakarta = Plus_Jakarta_Sans({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-jakarta",
+  variable: "--font-funnel-display",
   weight: ["500", "600", "700", "800"],
+  style: ["normal"],
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600"],
+  style: ["normal"],
 })
 
 export const metadata: Metadata = {
@@ -29,12 +46,11 @@ export const metadata: Metadata = {
   creator: siteConfig.name,
   keywords: [
     "analytics",
+    "operations",
     "dashboard",
-    "data",
-    "saas",
-    "metrics",
-    "real-time analytics",
-    "business intelligence",
+    "kpi",
+    "time series",
+    "anomaly detection",
   ],
   openGraph: {
     type: "website",
@@ -62,13 +78,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jakarta.variable}`}
+      className={`${hankenGrotesk.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="overflow-y-scroll scroll-auto bg-white font-sans antialiased selection:bg-indigo-100 selection:text-indigo-700 dark:bg-gray-950">
+      <body className="overflow-y-scroll bg-surface-base font-sans text-fg-primary antialiased">
         <ThemeProvider defaultTheme="system" attribute="class">
           {children}
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Nova Analytics",
-  tagline: "Illuminate Your Data",
-  url: "https://nova-analytics.vercel.app",
+  tagline: "Operational instrumentation",
+  url: "https://nova.siama.mx",
   description:
-    "Modern analytics for teams that move fast. Real-time dashboards, AI-powered insights, and custom reports — all in one place.",
+    "An operational analytics console for the people on the receiving end of every dashboard alert: precise readouts, dense layouts, and drill-downs that don't make you wait.",
   baseLinks: {
     home: "/",
     landing: "/",

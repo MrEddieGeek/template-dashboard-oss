@@ -1,5 +1,3 @@
-// Tremor Raw Button [v0.1.1]
-
 import { Slot } from "@radix-ui/react-slot"
 import { RiLoader2Fill } from "@remixicon/react"
 import React from "react"
@@ -9,87 +7,40 @@ import { cx, focusRing } from "@/lib/utils"
 
 const buttonVariants = tv({
   base: [
-    // base
-    "relative inline-flex items-center justify-center whitespace-nowrap rounded-md border px-3 py-2 text-center text-sm font-medium shadow-sm transition-all duration-100 ease-in-out sm:text-sm",
-    // disabled
-    "disabled:pointer-events-none disabled:shadow-none",
-    // focus
+    "relative inline-flex items-center justify-center whitespace-nowrap rounded-md border px-3.5 py-2 text-center text-sm font-medium transition-colors duration-100 ease-out",
+    "min-h-9",
+    "disabled:pointer-events-none disabled:opacity-50",
     focusRing,
   ],
   variants: {
     variant: {
       primary: [
-        // border
         "border-transparent",
-        // text color
-        "text-white dark:text-gray-900",
-        // background color
-        "bg-gray-900 dark:bg-gray-50",
-        // hover color
-        "hover:bg-gray-800 dark:hover:bg-gray-200",
-        // disabled
-        "disabled:bg-gray-100 disabled:text-gray-400",
-        "disabled:dark:bg-gray-800 disabled:dark:text-gray-600",
+        "bg-[var(--accent)] text-[var(--accent-on)]",
+        "hover:bg-[var(--accent-emphasis)]",
       ],
       secondary: [
-        // border
-        "border-gray-300 dark:border-gray-800",
-        // text color
-        "text-gray-900 dark:text-gray-50",
-        // background color
-        "bg-white dark:bg-gray-950",
-        //hover color
-        "hover:bg-gray-50 dark:hover:bg-gray-900/60",
-        // disabled
-        "disabled:text-gray-400",
-        "disabled:dark:text-gray-600",
+        "border-rule",
+        "bg-surface-1 text-fg-primary",
+        "hover:bg-surface-2",
       ],
       light: [
-        // base
-        "shadow-none",
-        // border
         "border-transparent",
-        // text color
-        "text-gray-900 dark:text-gray-50",
-        // background color
-        "bg-gray-200 dark:bg-gray-900",
-        // hover color
-        "hover:bg-gray-300/70 dark:hover:bg-gray-800/80",
-        // disabled
-        "disabled:bg-gray-100 disabled:text-gray-400",
-        "disabled:dark:bg-gray-800 disabled:dark:text-gray-600",
+        "bg-surface-2 text-fg-primary",
+        "hover:bg-surface-3",
       ],
       ghost: [
-        // base
-        "shadow-none",
-        // border
-        "border-transparent",
-        // text color
-        "text-gray-900 dark:text-gray-50",
-        // hover color
-        "bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800/80",
-        // disabled
-        "disabled:text-gray-400",
-        "disabled:dark:text-gray-600",
+        "border-transparent bg-transparent text-fg-primary",
+        "hover:bg-surface-2",
       ],
       destructive: [
-        // text color
-        "text-white",
-        // border
         "border-transparent",
-        // background color
-        "bg-red-600 dark:bg-red-700",
-        // hover color
-        "hover:bg-red-700 dark:hover:bg-red-600",
-        // disabled
-        "disabled:bg-red-300 disabled:text-white",
-        "disabled:dark:bg-red-950 disabled:dark:text-red-400",
+        "bg-[var(--negative)] text-[var(--fg-inverted)]",
+        "hover:bg-[color-mix(in_oklch,var(--negative)_85%,black)]",
       ],
     },
   },
-  defaultVariants: {
-    variant: "primary",
-  },
+  defaultVariants: { variant: "primary" },
 })
 
 interface ButtonProps

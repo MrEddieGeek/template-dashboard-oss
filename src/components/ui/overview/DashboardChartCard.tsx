@@ -1,3 +1,5 @@
+"use client"
+
 import { PeriodValue } from "@/app/(dashboard)/dashboard/page"
 import { Badge } from "@/components/Badge"
 import { LineChart } from "@/components/LineChart"
@@ -10,6 +12,7 @@ import {
   interval,
   isWithinInterval,
 } from "date-fns"
+import * as React from "react"
 import { DateRange } from "react-day-picker"
 import { getPeriod } from "./DashboardFilterbar"
 
@@ -47,49 +50,44 @@ export function ChartCard({
   isThumbnail,
 }: CardProps) {
   const formatter = formattingMap[type]
-  const selectedDatesInterval =
-    selectedDates?.from && selectedDates?.to
-      ? interval(selectedDates.from, selectedDates.to)
-      : null
-  const allDatesInInterval =
-    selectedDates?.from && selectedDates?.to
-      ? eachDayOfInterval(interval(selectedDates.from, selectedDates.to))
-      : null
-  const prevDates = getPeriod(selectedDates)
 
-  const prevDatesInterval =
-    prevDates?.from && prevDates?.to
-      ? interval(prevDates.from, prevDates.to)
-      : null
+  const { chartData, value, previousValue, evolution } = React.useMemo(() => {
+    const selectedDatesInterval =
+      selectedDates?.from && selectedDates?.to
+        ? interval(selectedDates.from, selectedDates.to)
+        : null
+    const allDatesInInterval =
+      selectedDates?.from && selectedDates?.to
+        ? eachDayOfInterval(interval(selectedDates.from, selectedDates.to))
+        : null
+    const prevDates = getPeriod(selectedDates)
+    const prevDatesInterval =
+      prevDates?.from && prevDates?.to
+        ? interval(prevDates.from, prevDates.to)
+        : null
 
-  const data = overviews
-    .filter((overview) => {
-      if (selectedDatesInterval) {
-        return isWithinInterval(overview.date, selectedDatesInterval)
-      }
-      return true
-    })
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    const data = overviews
+      .filter((o) =>
+        selectedDatesInterval
+          ? isWithinInterval(o.date, selectedDatesInterval)
+          : true,
+      )
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-  const prevData = overviews
-    .filter((overview) => {
-      if (prevDatesInterval) {
-        return isWithinInterval(overview.date, prevDatesInterval)
-      }
-      return false
-    })
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    const prevData = overviews
+      .filter((o) =>
+        prevDatesInterval ? isWithinInterval(o.date, prevDatesInterval) : false,
+      )
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-  const chartData = allDatesInInterval
-    ?.map((date, index) => {
+    const chartData = allDatesInInterval?.map((date, index) => {
       const overview = data[index]
       const prevOverview = prevData[index]
       const value = (overview?.[title] as number) || null
       const previousValue = (prevOverview?.[title] as number) || null
-
       return {
         title,
-        date: date,
+        date,
         formattedDate: formatDate(date, "dd/MM/yyyy"),
         value,
         previousDate: prevOverview?.date,
@@ -104,26 +102,32 @@ export function ChartCard({
             : undefined,
       }
     })
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
+    const value =
+      chartData?.reduce((acc, item) => acc + (item.value || 0), 0) || 0
+    const previousValue =
+      chartData?.reduce(
+        (acc, item) => acc + (item.previousValue || 0),
+        0,
+      ) || 0
+    const evolution =
+      selectedPeriod !== "no-comparison" && previousValue
+        ? (value - previousValue) / previousValue
+        : 0
+
+    return { chartData, value, previousValue, evolution }
+  }, [title, selectedDates, selectedPeriod])
 
   const categories =
     selectedPeriod === "no-comparison" ? ["value"] : ["value", "previousValue"]
-  const value =
-    chartData?.reduce((acc, item) => acc + (item.value || 0), 0) || 0
-  const previousValue =
-    chartData?.reduce((acc, item) => acc + (item.previousValue || 0), 0) || 0
-  const evolution =
-    selectedPeriod !== "no-comparison"
-      ? (value - previousValue) / previousValue
-      : 0
 
   return (
-    <div className={cx("transition")}>
-      <div className="flex items-center justify-between gap-x-2">
-        <div className="flex items-center gap-x-2">
-          <dt className="font-bold text-gray-900 sm:text-sm dark:text-gray-50">
+    <div className={cx("transition-colors")}>
+      <div className="flex items-baseline justify-between gap-x-2">
+        <div className="flex items-baseline gap-x-2">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
             {title}
-          </dt>
+          </h3>
           {selectedPeriod !== "no-comparison" && (
             <Badge variant={getBadgeType(evolution)}>
               {percentageFormatter(evolution)}
@@ -131,21 +135,21 @@ export function ChartCard({
           )}
         </div>
       </div>
-      <div className="mt-2 flex items-baseline justify-between">
-        <dd className="text-xl text-gray-900 dark:text-gray-50">
+      <div className="mt-3 flex items-baseline justify-between">
+        <p className="font-display text-2xl font-semibold tabular-nums text-fg-primary">
           {formatter(value)}
-        </dd>
+        </p>
         {selectedPeriod !== "no-comparison" && (
-          <dd className="text-sm text-gray-500">
+          <p className="text-sm tabular-nums text-fg-muted">
             from {formatter(previousValue)}
-          </dd>
+          </p>
         )}
       </div>
       <LineChart
         className="mt-6 h-32"
         data={chartData || []}
         index="formattedDate"
-        colors={["indigo", "gray"]}
+        colors={["primary", "compare"]}
         startEndOnly={true}
         valueFormatter={(value) => formatter(value as number)}
         showYAxis={false}

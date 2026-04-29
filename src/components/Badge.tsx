@@ -1,41 +1,37 @@
-// Tremor Raw Badge [v0.0.0]
-
 import React from "react"
 import { tv, type VariantProps } from "tailwind-variants"
-
 import { cx } from "@/lib/utils"
 
 const badgeVariants = tv({
   base: cx(
-    "inline-flex items-center gap-x-1 whitespace-nowrap rounded px-1.5 py-0.5 text-xs font-semibold ring-1",
+    "inline-flex items-center gap-x-1 whitespace-nowrap rounded px-1.5 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wide tabular-nums",
+    "ring-1 ring-inset",
   ),
   variants: {
     variant: {
       default: [
-        "bg-indigo-50 text-indigo-800 ring-indigo-500/30",
-        "dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-indigo-400/30",
+        "bg-[var(--accent-soft)] text-[var(--accent-emphasis)]",
+        "ring-[color-mix(in_oklch,var(--accent)_30%,transparent)]",
       ],
       neutral: [
-        "bg-gray-50 text-gray-700 ring-gray-500/30",
-        "dark:bg-gray-400/10 dark:text-gray-300 dark:ring-gray-400/20",
+        "bg-surface-2 text-fg-secondary",
+        "ring-[var(--rule)]",
       ],
       success: [
-        "bg-emerald-50 text-emerald-800 ring-emerald-600/30",
-        "dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/20",
+        "bg-[var(--positive-soft)] text-[var(--positive)]",
+        "ring-[color-mix(in_oklch,var(--positive)_25%,transparent)]",
       ],
       error: [
-        "bg-red-50 text-red-800 ring-red-600/20",
-        "dark:bg-red-400/10 dark:text-red-400 dark:ring-red-400/20",
+        "bg-[var(--negative-soft)] text-[var(--negative)]",
+        "ring-[color-mix(in_oklch,var(--negative)_25%,transparent)]",
       ],
       warning: [
-        "bg-yellow-50 text-yellow-800 ring-yellow-600/30",
-        "dark:bg-yellow-400/10 dark:text-yellow-500 dark:ring-yellow-400/20",
+        "bg-[var(--caution-soft)] text-[var(--caution)]",
+        "ring-[color-mix(in_oklch,var(--caution)_25%,transparent)]",
       ],
     },
   },
-  defaultVariants: {
-    variant: "default",
-  },
+  defaultVariants: { variant: "default" },
 })
 
 interface BadgeProps

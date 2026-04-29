@@ -1,3 +1,143 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Nova Analytics — semantic OKLCH token system
+ *
+ * Surface neutrals are tinted toward hue 70 (warm paper / graphite),
+ * NOT toward blue. Accent is terracotta at hue ~40 — used rarely.
+ * Light and dark are derived from the same hue ladder so the product
+ * feels like one piece of equipment in both modes.
+ */
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* surfaces — light mode (warm paper) */
+    --surface-base:    oklch(98.4% 0.006 70);
+    --surface-1:       oklch(96.2% 0.008 70);
+    --surface-2:       oklch(93.0% 0.010 70);
+    --surface-3:       oklch(88.0% 0.012 70);
+    --surface-inset:   oklch(99.2% 0.004 70);
+
+    /* foregrounds */
+    --fg-primary:      oklch(22.0% 0.018 70);
+    --fg-secondary:    oklch(42.0% 0.014 70);
+    --fg-muted:        oklch(58.0% 0.012 70);
+    --fg-faint:        oklch(72.0% 0.010 70);
+    --fg-inverted:     oklch(98.4% 0.006 70);
+
+    /* borders / rules */
+    --rule-strong:     oklch(80.0% 0.012 70);
+    --rule:            oklch(88.0% 0.010 70);
+    --rule-soft:       oklch(92.0% 0.008 70);
+
+    /* accent — terracotta / burnt sienna */
+    --accent:          oklch(58.0% 0.135 40);
+    --accent-emphasis: oklch(50.0% 0.150 40);
+    --accent-soft:     oklch(94.0% 0.030 40);
+    --accent-on:       oklch(99.0% 0.005 70);
+    --accent-ring:     oklch(70.0% 0.110 40 / 0.35);
+
+    /* semantic states (chroma reduced from base) */
+    --positive:        oklch(56.0% 0.110 150);
+    --positive-soft:   oklch(94.0% 0.030 150);
+    --negative:        oklch(56.0% 0.155 25);
+    --negative-soft:   oklch(94.0% 0.030 25);
+    --caution:         oklch(64.0% 0.130 75);
+    --caution-soft:    oklch(94.0% 0.040 75);
+
+    /* chart palette — perceptually spaced, matched lightness */
+    --chart-1: oklch(55.0% 0.135 40);   /* terracotta */
+    --chart-2: oklch(55.0% 0.110 150);  /* moss */
+    --chart-3: oklch(55.0% 0.115 250);  /* slate-blue (only here, secondary) */
+    --chart-4: oklch(55.0% 0.130 75);   /* ochre */
+    --chart-5: oklch(55.0% 0.105 320);  /* mauve */
+    --chart-6: oklch(55.0% 0.080 200);  /* steel */
+
+    /* selection */
+    --selection-bg: oklch(85.0% 0.080 40);
+    --selection-fg: oklch(20.0% 0.020 40);
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    /* surfaces — dark mode (warm graphite) */
+    --surface-base:    oklch(15.5% 0.008 70);
+    --surface-1:       oklch(18.5% 0.010 70);
+    --surface-2:       oklch(22.0% 0.012 70);
+    --surface-3:       oklch(28.0% 0.014 70);
+    --surface-inset:   oklch(13.0% 0.006 70);
+
+    /* foregrounds — note +0.05 line-height handled in body via leading util */
+    --fg-primary:      oklch(96.0% 0.008 70);
+    --fg-secondary:    oklch(82.0% 0.012 70);
+    --fg-muted:        oklch(64.0% 0.014 70);
+    --fg-faint:        oklch(48.0% 0.012 70);
+    --fg-inverted:     oklch(15.5% 0.008 70);
+
+    --rule-strong:     oklch(38.0% 0.014 70);
+    --rule:            oklch(30.0% 0.012 70);
+    --rule-soft:       oklch(24.0% 0.010 70);
+
+    --accent:          oklch(68.0% 0.140 40);
+    --accent-emphasis: oklch(74.0% 0.150 40);
+    --accent-soft:     oklch(28.0% 0.060 40);
+    --accent-on:       oklch(15.5% 0.020 40);
+    --accent-ring:     oklch(70.0% 0.130 40 / 0.45);
+
+    --positive:        oklch(72.0% 0.115 150);
+    --positive-soft:   oklch(28.0% 0.050 150);
+    --negative:        oklch(70.0% 0.155 25);
+    --negative-soft:   oklch(28.0% 0.060 25);
+    --caution:         oklch(76.0% 0.140 75);
+    --caution-soft:    oklch(28.0% 0.060 75);
+
+    --chart-1: oklch(70.0% 0.140 40);
+    --chart-2: oklch(70.0% 0.115 150);
+    --chart-3: oklch(70.0% 0.120 250);
+    --chart-4: oklch(70.0% 0.135 75);
+    --chart-5: oklch(70.0% 0.110 320);
+    --chart-6: oklch(70.0% 0.085 200);
+
+    --selection-bg: oklch(40.0% 0.100 40);
+    --selection-fg: oklch(96.0% 0.010 70);
+  }
+
+  html {
+    background-color: var(--surface-base);
+    color: var(--fg-primary);
+  }
+
+  body {
+    background-color: var(--surface-base);
+    color: var(--fg-primary);
+    /* light type on dark needs more leading per impeccable */
+    line-height: 1.55;
+  }
+
+  .dark body {
+    line-height: 1.62;
+  }
+
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-fg);
+  }
+
+  /* tabular figures everywhere numbers actually appear */
+  .tabular,
+  [data-tabular],
+  .font-mono,
+  table,
+  th,
+  td,
+  dd,
+  output {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+}

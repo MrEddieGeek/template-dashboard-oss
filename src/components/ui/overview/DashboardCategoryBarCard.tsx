@@ -27,59 +27,66 @@ export function CategoryBarCard({
   data,
 }: CardProps) {
   return (
-    <>
-      <div className="flex flex-col justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <h3 className="font-bold text-gray-900 sm:text-sm dark:text-gray-50">
-              {title}
-            </h3>
-            <Badge variant="neutral">{change}</Badge>
-          </div>
-          <p className="mt-2 flex items-baseline gap-2">
-            <span className="text-xl text-gray-900 dark:text-gray-50">
-              {value}
-            </span>
-            <span className="text-sm text-gray-500">{valueDescription}</span>
+    <section className="flex flex-col justify-between">
+      <div>
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+            {title}
+          </h3>
+          <Badge variant="neutral">{change}</Badge>
+        </div>
+        <p className="mt-3 flex items-baseline gap-2">
+          <span className="font-display text-3xl font-semibold tabular-nums text-fg-primary">
+            {value}
+          </span>
+          <span className="text-sm text-fg-muted">{valueDescription}</span>
+        </p>
+        <div className="mt-6">
+          <p className="font-mono text-[11px] uppercase tracking-wide text-fg-muted">
+            {subtitle}
           </p>
-          <div className="mt-4">
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
-              {subtitle}
-            </p>
-            <div className="mt-2 flex items-center gap-0.5">
-              {data.map((item) => (
-                <div
-                  key={item.title}
-                  className={cx(item.color, `h-1.5 rounded-full`)}
-                  style={{ width: `${item.percentage}%` }}
-                />
-              ))}
-            </div>
-          </div>
-          <ul role="list" className="mt-5 space-y-2">
+          <div className="mt-2 flex h-1.5 items-center gap-0.5 overflow-hidden rounded-full">
             {data.map((item) => (
-              <li key={item.title} className="flex items-center gap-2 text-xs">
+              <div
+                key={item.title}
+                className={cx(item.color, "h-full")}
+                style={{ width: `${item.percentage}%` }}
+              />
+            ))}
+          </div>
+        </div>
+        <ul role="list" className="mt-5 space-y-2">
+          {data.map((item) => (
+            <li
+              key={item.title}
+              className="flex items-baseline justify-between gap-3 text-sm"
+            >
+              <span className="flex items-center gap-2">
                 <span
-                  className={cx(item.color, "size-2.5 rounded-sm")}
+                  className={cx(item.color, "size-2 rounded-sm")}
                   aria-hidden="true"
                 />
-                <span className="text-gray-900 dark:text-gray-50">
-                  {item.title}
+                <span className="text-fg-primary">{item.title}</span>
+              </span>
+              <span className="tabular-nums text-fg-muted">
+                {item.value}
+                <span className="ml-1.5 text-fg-faint">
+                  {item.percentage}%
                 </span>
-                <span className="text-gray-600 dark:text-gray-400">
-                  ({item.value} / {item.percentage}%)
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <p className="mt-6 text-xs text-gray-500">
-          {ctaDescription}{" "}
-          <a href={ctaLink} className="text-indigo-600 dark:text-indigo-400">
-            {ctaText}
-          </a>
-        </p>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+      <p className="mt-6 text-xs text-fg-muted">
+        {ctaDescription}{" "}
+        <a
+          href={ctaLink}
+          className="font-medium text-fg-primary underline-offset-4 hover:underline"
+        >
+          {ctaText}
+        </a>
+      </p>
+    </section>
   )
 }

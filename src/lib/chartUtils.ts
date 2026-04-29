@@ -1,60 +1,58 @@
-// Tremor Raw chartColors [v0.0.0]
+/*
+ * Chart palette — semantic, OKLCH-driven via CSS variables.
+ *
+ * Keys are intentional series labels rather than color names so consumers
+ * pick by role ("primary" series for the dominant metric, "compare" for
+ * the previous-period overlay) rather than reaching for indigo/violet/cyan.
+ */
 
 export type ColorUtility = "bg" | "stroke" | "fill" | "text"
 
 export const chartColors = {
-  indigo: {
-    bg: "bg-indigo-600 dark:bg-indigo-500",
-    stroke: "stroke-indigo-600 dark:stroke-indigo-500",
-    fill: "fill-indigo-600 dark:fill-indigo-500",
-    text: "text-indigo-600 dark:text-indigo-500",
+  primary: {
+    bg: "bg-[var(--chart-1)]",
+    stroke: "[stroke:var(--chart-1)]",
+    fill: "[fill:var(--chart-1)]",
+    text: "text-[var(--chart-1)]",
   },
-  blue: {
-    bg: "bg-blue-500",
-    stroke: "stroke-blue-500",
-    fill: "fill-blue-500",
-    text: "text-blue-500",
+  compare: {
+    bg: "bg-[var(--fg-muted)]",
+    stroke: "[stroke:var(--fg-muted)]",
+    fill: "[fill:var(--fg-muted)]",
+    text: "text-[var(--fg-muted)]",
   },
-  emerald: {
-    bg: "bg-emerald-500",
-    stroke: "stroke-emerald-500",
-    fill: "fill-emerald-500",
-    text: "text-emerald-500",
+  positive: {
+    bg: "bg-[var(--chart-2)]",
+    stroke: "[stroke:var(--chart-2)]",
+    fill: "[fill:var(--chart-2)]",
+    text: "text-[var(--chart-2)]",
   },
-  violet: {
-    bg: "bg-violet-500",
-    stroke: "stroke-violet-500",
-    fill: "fill-violet-500",
-    text: "text-violet-500",
+  steel: {
+    bg: "bg-[var(--chart-3)]",
+    stroke: "[stroke:var(--chart-3)]",
+    fill: "[fill:var(--chart-3)]",
+    text: "text-[var(--chart-3)]",
   },
-  amber: {
-    bg: "bg-amber-500",
-    stroke: "stroke-amber-500",
-    fill: "fill-amber-500",
-    text: "text-amber-500",
+  ochre: {
+    bg: "bg-[var(--chart-4)]",
+    stroke: "[stroke:var(--chart-4)]",
+    fill: "[fill:var(--chart-4)]",
+    text: "text-[var(--chart-4)]",
   },
-  gray: {
-    bg: "bg-gray-500",
-    stroke: "stroke-gray-500",
-    fill: "fill-gray-500",
-    text: "text-gray-500",
+  mauve: {
+    bg: "bg-[var(--chart-5)]",
+    stroke: "[stroke:var(--chart-5)]",
+    fill: "[fill:var(--chart-5)]",
+    text: "text-[var(--chart-5)]",
   },
-  cyan: {
-    bg: "bg-cyan-500",
-    stroke: "stroke-cyan-500",
-    fill: "fill-cyan-500",
-    text: "text-cyan-500",
-  },
-  pink: {
-    bg: "bg-pink-500",
-    stroke: "stroke-pink-500",
-    fill: "fill-pink-500",
-    text: "text-pink-500",
+  slate: {
+    bg: "bg-[var(--chart-6)]",
+    stroke: "[stroke:var(--chart-6)]",
+    fill: "[fill:var(--chart-6)]",
+    text: "text-[var(--chart-6)]",
   },
 } as const satisfies {
-  [color: string]: {
-    [key in ColorUtility]: string
-  }
+  [color: string]: { [key in ColorUtility]: string }
 }
 
 export type AvailableChartColorsKeys = keyof typeof chartColors
@@ -78,16 +76,9 @@ export const getColorClassName = (
   color: AvailableChartColorsKeys,
   type: ColorUtility,
 ): string => {
-  const fallbackColor = {
-    bg: "bg-gray-500",
-    stroke: "stroke-gray-500",
-    fill: "fill-gray-500",
-    text: "text-gray-500",
-  }
-  return chartColors[color]?.[type] ?? fallbackColor[type]
+  const fallback = chartColors.compare
+  return chartColors[color]?.[type] ?? fallback[type]
 }
-
-// Tremor Raw getYAxisDomain [v0.0.0]
 
 export const getYAxisDomain = (
   autoMinValue: boolean,
@@ -99,22 +90,16 @@ export const getYAxisDomain = (
   return [minDomain, maxDomain]
 }
 
-// Tremor Raw hasOnlyOneValueForKey [v0.1.0]
-
 export function hasOnlyOneValueForKey(
   array: any[],
   keyToCheck: string,
 ): boolean {
   const val: any[] = []
-
   for (const obj of array) {
     if (Object.prototype.hasOwnProperty.call(obj, keyToCheck)) {
       val.push(obj[keyToCheck])
-      if (val.length > 1) {
-        return false
-      }
+      if (val.length > 1) return false
     }
   }
-
   return true
 }

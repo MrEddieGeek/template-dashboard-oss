@@ -20,7 +20,7 @@ const workspaces = [
     name: "Acme Corp",
     initials: "AC",
     role: "Member",
-    color: "bg-indigo-600 dark:bg-indigo-500",
+    color: "bg-[var(--accent)] text-[var(--accent-on)]",
   },
   // Add more workspaces...
 ]
@@ -52,27 +52,27 @@ export const WorkspacesDropdownDesktop = () => {
         <DropdownMenuTrigger asChild>
           <button
             className={cx(
-              "flex w-full items-center gap-x-2.5 rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
+              "flex min-h-11 w-full items-center gap-x-2.5 rounded-md border border-rule bg-surface-1 p-2 text-sm transition-colors hover:bg-surface-2",
               focusInput,
             )}
           >
             <span
-              className="flex aspect-square size-8 items-center justify-center rounded bg-indigo-600 p-2 text-xs font-medium text-white dark:bg-indigo-500"
+              className="flex aspect-square size-8 items-center justify-center rounded bg-[var(--accent)] p-2 font-mono text-[10px] font-semibold uppercase tracking-wide text-[var(--accent-on)]"
               aria-hidden="true"
             >
               AC
             </span>
             <div className="flex w-full items-center justify-between gap-x-4 truncate">
-              <div className="truncate">
-                <p className="truncate whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-50">
+              <div className="truncate text-left">
+                <p className="truncate whitespace-nowrap text-sm font-medium text-fg-primary">
                   Acme Corp
                 </p>
-                <p className="whitespace-nowrap text-left text-xs text-gray-700 dark:text-gray-300">
+                <p className="whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-fg-muted">
                   Member
                 </p>
               </div>
               <RiExpandUpDownLine
-                className="size-5 shrink-0 text-gray-500"
+                className="size-4 shrink-0 text-fg-muted"
                 aria-hidden="true"
               />
             </div>
@@ -98,17 +98,17 @@ export const WorkspacesDropdownDesktop = () => {
                   <span
                     className={cx(
                       workspace.color,
-                      "flex aspect-square size-8 items-center justify-center rounded p-2 text-xs font-medium text-white",
+                      "flex aspect-square size-8 items-center justify-center rounded p-2 font-mono text-[10px] font-semibold uppercase tracking-wide",
                     )}
                     aria-hidden="true"
                   >
                     {workspace.initials}
                   </span>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                    <p className="text-sm font-medium text-fg-primary">
                       {workspace.name}
                     </p>
-                    <p className="text-xs text-gray-700 dark:text-gray-400">
+                    <p className="font-mono text-[10px] uppercase tracking-wide text-fg-muted">
                       {workspace.role}
                     </p>
                   </div>
@@ -153,25 +153,25 @@ export const WorkspacesDropdownMobile = () => {
         modal={false}
       >
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-x-1.5 rounded-md p-2 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-900">
+          <button className="flex min-h-11 items-center gap-x-1.5 rounded-md p-2 hover:bg-surface-2 focus:outline-none">
             <span
               className={cx(
-                "flex aspect-square size-7 items-center justify-center rounded bg-indigo-600 p-2 text-xs font-medium text-white dark:bg-indigo-500",
+                "flex aspect-square size-8 items-center justify-center rounded bg-[var(--accent)] p-2 font-mono text-[10px] font-semibold uppercase tracking-wide text-[var(--accent-on)]",
               )}
               aria-hidden="true"
             >
               AC
             </span>
             <RiArrowRightSLine
-              className="size-4 shrink-0 text-gray-500"
+              className="size-4 shrink-0 text-fg-muted"
               aria-hidden="true"
             />
             <div className="flex w-full items-center justify-between gap-x-3 truncate">
-              <p className="truncate whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-50">
+              <p className="truncate whitespace-nowrap text-sm font-medium text-fg-primary">
                 Retail analytics
               </p>
               <RiExpandUpDownLine
-                className="size-4 shrink-0 text-gray-500"
+                className="size-4 shrink-0 text-fg-muted"
                 aria-hidden="true"
               />
             </div>
@@ -205,10 +205,10 @@ export const WorkspacesDropdownMobile = () => {
                     {workspace.initials}
                   </span>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                    <p className="text-sm font-medium text-fg-primary">
                       {workspace.name}
                     </p>
-                    <p className="text-xs text-gray-700 dark:text-gray-300">
+                    <p className="font-mono text-[10px] uppercase tracking-wide text-fg-muted">
                       {workspace.role}
                     </p>
                   </div>

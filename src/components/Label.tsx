@@ -18,13 +18,8 @@ const Label = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "text-sm leading-none",
-      // text color
-      "text-gray-900 dark:text-gray-50",
-      // disabled
-      {
-        "text-gray-400 dark:text-gray-600": disabled,
-      },
+      "text-sm leading-none text-fg-primary",
+      { "text-fg-faint": disabled },
       className,
     )}
     aria-disabled={disabled}

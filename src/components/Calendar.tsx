@@ -45,19 +45,11 @@ const NavigationButton = React.forwardRef<
         type="button"
         disabled={disabled}
         className={cx(
-          "flex size-8 shrink-0 select-none items-center justify-center rounded border p-1 outline-none transition sm:size-[30px]",
-          // text color
-          "text-gray-600 hover:text-gray-800",
-          "dark:text-gray-400 hover:dark:text-gray-200",
-          // border color
-          "border-gray-300 dark:border-gray-800",
-          // background color
-          "hover:bg-gray-50 active:bg-gray-100",
-          "hover:dark:bg-gray-900 active:dark:bg-gray-800",
-          // disabled
-          "disabled:pointer-events-none",
-          "disabled:border-gray-200 disabled:dark:border-gray-800",
-          "disabled:text-gray-400 disabled:dark:text-gray-600",
+          "flex size-9 shrink-0 select-none items-center justify-center rounded border p-1 outline-none transition-colors sm:size-8",
+          "text-fg-secondary hover:text-fg-primary",
+          "border-rule",
+          "hover:bg-surface-2 active:bg-surface-3",
+          "disabled:pointer-events-none disabled:border-rule-soft disabled:text-fg-faint",
           focusRing,
         )}
         onClick={onClick}
@@ -116,30 +108,28 @@ const Calendar = ({
         nav: "gap-1 flex items-center rounded-full size-full justify-between p-4",
         table: "w-full border-collapse space-y-1",
         head_cell:
-          "w-9 font-medium text-sm sm:text-xs text-center text-gray-400 dark:text-gray-600 pb-2",
+          "w-11 font-mono uppercase tracking-wide text-[10px] text-center text-fg-faint pb-2",
         row: "w-full mt-0.5",
         cell: cx(
           "relative p-0 text-center focus-within:relative",
-          "text-gray-900 dark:text-gray-50",
+          "text-fg-primary",
         ),
         day: cx(
-          "size-9 rounded text-sm text-gray-900 focus:z-10 dark:text-gray-50",
-          "hover:bg-gray-200 hover:dark:bg-gray-700",
+          "size-11 sm:size-9 rounded text-sm tabular-nums text-fg-primary focus:z-10",
+          "hover:bg-surface-2",
           focusRing,
         ),
         day_today: "font-semibold",
         day_selected: cx(
           "rounded",
-          "aria-selected:bg-indigo-600 aria-selected:text-gray-50",
-          "dark:aria-selected:bg-indigo-500 dark:aria-selected:text-gray-50",
+          "aria-selected:bg-[var(--accent)] aria-selected:text-[var(--accent-on)]",
         ),
         day_disabled:
-          "!text-gray-300 dark:!text-gray-700 line-through disabled:hover:bg-transparent",
-        day_outside: "text-gray-400 dark:text-gray-600",
+          "!text-fg-faint line-through disabled:hover:bg-transparent",
+        day_outside: "text-fg-faint",
         day_range_middle: cx(
           "!rounded-none",
-          "aria-selected:!bg-gray-100 aria-selected:!text-gray-900",
-          "dark:aria-selected:!bg-gray-900 dark:aria-selected:!text-gray-50",
+          "aria-selected:!bg-[var(--accent-soft)] aria-selected:!text-fg-primary",
         ),
         day_range_start: "rounded-r-none !rounded-l",
         day_range_end: "rounded-l-none !rounded-r",
@@ -222,7 +212,7 @@ const Calendar = ({
               <div
                 role="presentation"
                 aria-live="polite"
-                className="text-sm font-medium capitalize tabular-nums text-gray-900 dark:text-gray-50"
+                className="text-sm font-medium capitalize tabular-nums text-fg-primary"
               >
                 {format(props.displayMonth, "LLLL yyy", { locale })}
               </div>
@@ -295,11 +285,11 @@ const Calendar = ({
                   className={cx(
                     "absolute inset-x-1/2 bottom-1.5 h-0.5 w-4 -translate-x-1/2 rounded-[2px]",
                     {
-                      "bg-blue-500 dark:bg-blue-500": !selected,
-                      "!bg-white dark:!bg-gray-950": selected,
-                      "!bg-gray-400 dark:!bg-gray-600":
+                      "bg-[var(--accent)]": !selected,
+                      "!bg-[var(--accent-on)]": selected,
+                      "!bg-fg-muted":
                         selected && range_middle,
-                      "bg-gray-400 text-gray-400 dark:bg-gray-400 dark:text-gray-600":
+                      "bg-fg-faint text-fg-faint":
                         disabled,
                     },
                   )}

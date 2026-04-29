@@ -25,53 +25,51 @@ export function ProgressBarCard({
   data,
 }: CardProps) {
   return (
-    <>
-      <div className="flex flex-col justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <dt className="font-bold text-gray-900 sm:text-sm dark:text-gray-50">
-              {title}
-            </dt>
-            <Badge variant="neutral">{change}</Badge>
-          </div>
-          <dd className="mt-2 flex items-baseline gap-2">
-            <span className="text-xl text-gray-900 dark:text-gray-50">
-              {value}
-            </span>
-            <span className="text-sm text-gray-500">{valueDescription}</span>
-          </dd>
-          <ul role="list" className="mt-4 space-y-5">
-            {data.map((item) => (
-              <li key={item.title}>
-                <p className="flex justify-between text-sm">
-                  <span className="font-medium text-gray-900 dark:text-gray-50">
-                    {item.title}
-                  </span>
-                  <span className="font-medium text-gray-900 dark:text-gray-50">
-                    {item.current}
-                    <span className="font-normal text-gray-500">
-                      /{item.allowed}
-                      {item.unit}
-                    </span>
-                  </span>
-                </p>
-                <ProgressBar
-                  value={item.percentage}
-                  className="mt-2 [&>*]:h-1.5"
-                />
-              </li>
-            ))}
-          </ul>
+    <section className="flex flex-col justify-between">
+      <div>
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+            {title}
+          </h3>
+          <Badge variant="neutral">{change}</Badge>
         </div>
-        <div>
-          <p className="mt-6 text-xs text-gray-500">
-            {ctaDescription}{" "}
-            <a href={ctaLink} className="text-indigo-600 dark:text-indigo-400">
-              {ctaText}
-            </a>
-          </p>
-        </div>
+        <p className="mt-3 flex items-baseline gap-2">
+          <span className="font-display text-3xl font-semibold tabular-nums text-fg-primary">
+            {value}
+          </span>
+          <span className="text-sm text-fg-muted">{valueDescription}</span>
+        </p>
+        <ul role="list" className="mt-6 space-y-4">
+          {data.map((item) => (
+            <li key={item.title}>
+              <p className="flex justify-between text-sm">
+                <span className="text-fg-secondary">{item.title}</span>
+                <span className="tabular-nums text-fg-primary">
+                  {item.current}
+                  <span className="text-fg-muted">
+                    {" / "}
+                    {item.allowed}
+                    {item.unit}
+                  </span>
+                </span>
+              </p>
+              <ProgressBar
+                value={item.percentage}
+                className="mt-2 [&>*]:h-1"
+              />
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+      <p className="mt-6 text-xs text-fg-muted">
+        {ctaDescription}{" "}
+        <a
+          href={ctaLink}
+          className="font-medium text-fg-primary underline-offset-4 hover:underline"
+        >
+          {ctaText}
+        </a>
+      </p>
+    </section>
   )
 }

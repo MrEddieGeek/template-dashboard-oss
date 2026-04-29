@@ -6,26 +6,24 @@ import { siteConfig } from "./siteConfig"
 
 export default function NotFound() {
   return (
-    <div className="flex h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center px-6">
       <Link href={siteConfig.baseLinks.home}>
-        <NovaLogo className="mt-6 h-10 text-gray-900 dark:text-gray-50" />
+        <NovaLogo className="h-8 text-fg-primary" />
       </Link>
-      <p className="mt-6 font-heading text-4xl font-semibold text-indigo-600 sm:text-5xl dark:text-indigo-400">
-        404
+      <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-muted">
+        Status · 404
       </p>
-      <h1 className="mt-4 font-heading text-2xl font-semibold text-gray-900 dark:text-gray-50">
-        Page not found
+      <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg-primary sm:text-4xl">
+        No record at this address.
       </h1>
-      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-        Sorry, we couldn&rsquo;t find the page you&rsquo;re looking for.
+      <p className="mt-3 max-w-sm text-center text-sm text-fg-secondary">
+        The page you tried to open doesn&rsquo;t exist or has moved. Head back
+        and try a different route.
       </p>
-      <Button asChild className="group mt-8" variant="light">
+      <Button asChild className="mt-8" variant="secondary">
         <Link href={siteConfig.baseLinks.home}>
-          Go to the home page
-          <RiArrowRightLine
-            className="ml-1.5 size-5 text-gray-900 dark:text-gray-50"
-            aria-hidden="true"
-          />
+          Return home
+          <RiArrowRightLine className="ml-1.5 size-4" aria-hidden="true" />
         </Link>
       </Button>
     </div>

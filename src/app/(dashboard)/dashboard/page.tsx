@@ -110,19 +110,19 @@ const data3: KpiEntryExtended[] = [
     title: "Base tier",
     percentage: 68.1,
     value: "$200",
-    color: "bg-indigo-600 dark:bg-indigo-500",
+    color: "bg-[var(--chart-1)]",
   },
   {
     title: "On-demand charges",
     percentage: 20.8,
     value: "$61.1",
-    color: "bg-purple-600 dark:bg-purple-500",
+    color: "bg-[var(--chart-4)]",
   },
   {
     title: "Caching",
     percentage: 11.1,
     value: "$31.9",
-    color: "bg-gray-400 dark:bg-gray-600",
+    color: "bg-[var(--fg-faint)]",
   },
 ]
 
@@ -140,20 +140,23 @@ export default function Overview() {
   return (
     <>
       <section aria-labelledby="current-billing-cycle">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+          Section / Billing
+        </p>
         <h1
           id="current-billing-cycle"
-          className="scroll-mt-10 text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50"
+          className="mt-2 scroll-mt-10 font-display text-2xl font-semibold tracking-tight text-fg-primary sm:text-3xl"
         >
-          Current billing cycle
+          Current cycle
         </h1>
-        <div className="mt-4 grid grid-cols-1 gap-14 sm:mt-8 sm:grid-cols-2 lg:mt-10 xl:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
           <ProgressBarCard
             title="Usage"
             change="+0.2%"
             value="68.1%"
             valueDescription="of allowed capacity"
             ctaDescription="Monthly usage resets in 12 days."
-            ctaText="Manage plan."
+            ctaText="Manage plan"
             ctaLink="#"
             data={data}
           />
@@ -162,8 +165,8 @@ export default function Overview() {
             change="+2.9%"
             value="21.7%"
             valueDescription="weekly active users"
-            ctaDescription="Add up to 20 members in free plan."
-            ctaText="Invite users."
+            ctaDescription="Add up to 20 members on the free plan."
+            ctaText="Invite users"
             ctaLink="#"
             data={data2}
           />
@@ -172,22 +175,29 @@ export default function Overview() {
             change="-1.4%"
             value="$293.5"
             valueDescription="current billing cycle"
-            subtitle="Current costs"
+            subtitle="Composition"
             ctaDescription="Set hard caps in"
-            ctaText="cost spend management."
+            ctaText="cost spend management"
             ctaLink="#"
             data={data3}
           />
         </div>
       </section>
       <section aria-labelledby="usage-overview">
-        <h1
-          id="usage-overview"
-          className="mt-16 scroll-mt-8 text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50"
+        <div
+          className="sticky top-0 z-20 -mx-4 mt-16 flex items-baseline justify-between gap-4 border-b border-rule bg-surface-base px-4 py-4 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10"
         >
-          Overview
-        </h1>
-        <div className="sticky top-16 z-20 flex items-center justify-between border-b border-gray-200 bg-white pb-4 pt-4 sm:pt-6 lg:top-0 lg:mx-0 lg:px-0 lg:pt-8 dark:border-gray-800 dark:bg-gray-950">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+              Section / Metrics
+            </p>
+            <h2
+              id="usage-overview"
+              className="mt-1 font-display text-xl font-semibold tracking-tight text-fg-primary sm:text-2xl"
+            >
+              Overview
+            </h2>
+          </div>
           <Filterbar
             maxDate={maxDate}
             minDate={new Date(2024, 0, 1)}
@@ -195,9 +205,9 @@ export default function Overview() {
             onDatesChange={(dates) => setSelectedDates(dates)}
           />
         </div>
-        <dl
+        <div
           className={cx(
-            "mt-10 grid grid-cols-1 gap-14 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3",
+            "mt-10 grid grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-2 xl:grid-cols-3",
           )}
         >
           {categories.map((category) => {
@@ -211,7 +221,7 @@ export default function Overview() {
               />
             )
           })}
-        </dl>
+        </div>
       </section>
     </>
   )

@@ -1,22 +1,57 @@
-import { NovaMark } from "@/components/ui/icons/NovaMark"
-
-export default function Example() {
+export default function Details() {
   return (
-    <>
-      <h1 className="font-heading text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50">
-        Details
-      </h1>
-      <div className="mt-4 sm:mt-6 lg:mt-10">
-        <div className="my-40 flex w-full flex-col items-center justify-center text-center">
-          <NovaMark className="size-20 shrink-0" />
-          <h2 className="mt-6 font-heading text-lg font-semibold sm:text-xl">
-            Drill-down view
-          </h2>
-          <p className="mt-3 max-w-md text-sm text-gray-500 dark:text-gray-400">
-            Per-metric detail tables, breakdowns, and exports plug in here.
-          </p>
-        </div>
+    <div className="space-y-10">
+      <div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+          Section / Drill-down
+        </p>
+        <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fg-primary sm:text-3xl">
+          Details
+        </h1>
+        <p className="mt-2 max-w-prose text-sm text-fg-secondary">
+          Per-metric breakdowns, anomaly slices, and CSV exports surface here.
+          Pick a metric in the overview to drill in, or open a saved view from
+          your shortcuts.
+        </p>
       </div>
-    </>
+
+      <section
+        aria-labelledby="next-actions"
+        className="rounded-lg border border-rule bg-surface-1 p-6"
+      >
+        <h2
+          id="next-actions"
+          className="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted"
+        >
+          Next actions
+        </h2>
+        <ul className="mt-3 divide-y divide-rule-soft">
+          <li className="flex items-baseline justify-between gap-4 py-3 text-sm">
+            <span className="text-fg-primary">
+              Pick a metric from Overview to populate this view
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-wide text-fg-muted">
+              Pending
+            </span>
+          </li>
+          <li className="flex items-baseline justify-between gap-4 py-3 text-sm">
+            <span className="text-fg-primary">
+              Configure CSV export schedule
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-wide text-fg-muted">
+              Pending
+            </span>
+          </li>
+          <li className="flex items-baseline justify-between gap-4 py-3 text-sm">
+            <span className="text-fg-primary">
+              Subscribe to anomaly alerts on this slice
+            </span>
+            <span className="font-mono text-[11px] uppercase tracking-wide text-fg-muted">
+              Pending
+            </span>
+          </li>
+        </ul>
+      </section>
+    </div>
   )
 }

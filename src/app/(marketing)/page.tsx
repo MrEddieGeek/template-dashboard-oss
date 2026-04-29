@@ -1,157 +1,235 @@
 import Link from "next/link"
-import {
-  RiBarChartGroupedLine,
-  RiSparkling2Line,
-  RiTeamLine,
-  RiFileChart2Line,
-  RiArrowRightLine,
-} from "@remixicon/react"
+import { RiArrowRightLine } from "@remixicon/react"
 import { siteConfig } from "@/app/siteConfig"
 
-const features = [
+const capabilities = [
   {
-    name: "Real-time analytics",
-    description:
-      "Stream events from your stack and watch dashboards update the moment data lands.",
-    icon: RiBarChartGroupedLine,
+    label: "01",
+    title: "Real-time read-outs",
+    body: "Stream events from your stack and watch the readouts move. No five-minute polling, no stale dashboards. The cursor is the cursor.",
   },
   {
-    name: "AI-powered insights",
-    description:
-      "Surface anomalies, trends, and explanations automatically — no SQL required.",
-    icon: RiSparkling2Line,
+    label: "02",
+    title: "Drill-down without warm-up",
+    body: "Open a metric, drill straight to the underlying slice, export a CSV. The path from chart to row is one click — not a query, not a request to data.",
   },
   {
-    name: "Team collaboration",
-    description:
-      "Share workspaces, comment on charts, and export read-only views for stakeholders.",
-    icon: RiTeamLine,
+    label: "03",
+    title: "Anomaly markers, not magic",
+    body: "Flag inflections we can show you the math for. We mark, you decide; the explanations stay legible to the analyst, not just the model.",
   },
   {
-    name: "Custom reports",
-    description:
-      "Compose recurring reports with the metrics you care about, deliverable by email or webhook.",
-    icon: RiFileChart2Line,
+    label: "04",
+    title: "Reports on a schedule",
+    body: "Compose recurring reports against your saved metrics. Webhook, email, or download — your routine, not a vendor's.",
   },
 ] as const
 
-const metrics = [
-  { value: "10K+", label: "Active teams" },
-  { value: "99.9%", label: "Uptime SLA" },
-  { value: "50M+", label: "Events processed daily" },
-] as const
+const sampleSeries = [12, 18, 22, 19, 28, 34, 31, 38, 44, 41, 48, 56, 52, 60, 67]
+
+function HeroPlot() {
+  // small inline SVG chart so the hero shows the product's voice — not a screenshot mock,
+  // not a fake metric trio. left-aligned, honest typography, no gradient fill.
+  const w = 720
+  const h = 220
+  const padX = 0
+  const padY = 8
+  const maxV = Math.max(...sampleSeries)
+  const stepX = (w - padX * 2) / (sampleSeries.length - 1)
+  const points = sampleSeries.map((v, i) => {
+    const x = padX + i * stepX
+    const y = h - padY - ((v / maxV) * (h - padY * 2))
+    return `${x},${y}`
+  })
+  const path = `M ${points.join(" L ")}`
+  const last = points[points.length - 1].split(",")
+  return (
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      role="img"
+      aria-label="Sample throughput series, last fifteen intervals"
+      className="block w-full"
+    >
+      <defs>
+        <pattern id="grid" width="48" height="44" patternUnits="userSpaceOnUse">
+          <path
+            d="M 48 0 L 0 0 0 44"
+            fill="none"
+            stroke="var(--rule-soft)"
+            strokeWidth="1"
+          />
+        </pattern>
+      </defs>
+      <rect width={w} height={h} fill="url(#grid)" />
+      <path
+        d={path}
+        fill="none"
+        stroke="var(--accent)"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx={last[0]}
+        cy={last[1]}
+        r="3.5"
+        fill="var(--accent)"
+        stroke="var(--surface-base)"
+        strokeWidth="2"
+      />
+    </svg>
+  )
+}
 
 export default function LandingPage() {
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-600/30 via-violet-600/20 to-cyan-500/20"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-32 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-indigo-500/30 blur-3xl"
-        />
-        <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-20 sm:pt-28 lg:pt-32">
-          <div className="mx-auto max-w-3xl text-center animate-fadeInUp">
-            <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-cyan-300">
-              Nova Analytics · {siteConfig.tagline}
-            </span>
-            <h1 className="mt-6 font-heading text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Illuminate your data.
-            </h1>
-            <p className="mt-6 text-lg text-gray-300 sm:text-xl">
-              Modern analytics for teams that move fast. Real-time dashboards,
-              AI-powered insights, and custom reports — all in one place.
+      {/* Hero — left-aligned editorial statement + a small live-feeling readout. No gradient. No glow. */}
+      <section className="border-b border-rule">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 gap-y-12 px-6 py-20 sm:py-24 lg:grid-cols-12 lg:gap-y-0 lg:py-28">
+          <div className="lg:col-span-7">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-fg-muted">
+              Nova / Operational analytics · v0.1
             </p>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <h1 className="mt-6 max-w-xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-fg-primary sm:text-5xl lg:text-6xl">
+              An operations console for people who watch the numbers, not the
+              quarterly slide.
+            </h1>
+            <p className="mt-6 max-w-lg text-base text-fg-secondary sm:text-lg">
+              {siteConfig.description}
+            </p>
+            <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
               <Link
                 href={siteConfig.baseLinks.signup}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-semibold text-nova-ink shadow-sm transition hover:bg-gray-100 sm:w-auto"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-on)] transition-colors hover:bg-[var(--accent-emphasis)]"
               >
-                Get started free
+                Open a workspace
                 <RiArrowRightLine className="size-4" aria-hidden="true" />
               </Link>
               <Link
                 href={siteConfig.baseLinks.login}
-                className="inline-flex w-full items-center justify-center rounded-md border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:w-auto"
+                className="inline-flex min-h-11 items-center text-sm font-medium text-fg-primary underline-offset-4 hover:underline"
               >
-                Sign in
+                Sign in to an existing one
               </Link>
             </div>
+          </div>
+
+          <aside
+            aria-label="Sample readout"
+            className="lg:col-span-5"
+          >
+            <div className="rounded-md border border-rule bg-surface-1 p-5 shadow-rise">
+              <div className="flex items-baseline justify-between">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-muted">
+                  api/throughput · 15m
+                </p>
+                <p className="font-mono text-[11px] tabular-nums text-[var(--positive)]">
+                  +14.3%
+                </p>
+              </div>
+              <p className="mt-3 font-display text-3xl font-semibold tabular-nums text-fg-primary">
+                12,480
+                <span className="ml-2 text-base font-normal text-fg-muted">
+                  req/min
+                </span>
+              </p>
+              <div className="mt-5">
+                <HeroPlot />
+              </div>
+              <dl className="mt-5 grid grid-cols-3 gap-x-2 border-t border-rule-soft pt-3 text-xs tabular-nums">
+                <div>
+                  <dt className="font-mono text-[10px] uppercase tracking-wide text-fg-muted">
+                    p50
+                  </dt>
+                  <dd className="mt-1 text-fg-primary">42 ms</dd>
+                </div>
+                <div>
+                  <dt className="font-mono text-[10px] uppercase tracking-wide text-fg-muted">
+                    p95
+                  </dt>
+                  <dd className="mt-1 text-fg-primary">186 ms</dd>
+                </div>
+                <div>
+                  <dt className="font-mono text-[10px] uppercase tracking-wide text-fg-muted">
+                    err
+                  </dt>
+                  <dd className="mt-1 text-fg-primary">0.04%</dd>
+                </div>
+              </dl>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      {/* Capabilities — numbered editorial list, not a card grid. asymmetric column widths. */}
+      <section className="border-b border-rule">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="grid grid-cols-1 gap-x-12 gap-y-3 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-fg-muted">
+                §1 Capabilities
+              </p>
+              <h2 className="mt-3 max-w-sm font-display text-3xl font-semibold leading-tight tracking-tight text-fg-primary sm:text-4xl">
+                Built for the analyst on shift, not the buyer at the demo.
+              </h2>
+            </div>
+            <ol className="lg:col-span-8">
+              {capabilities.map((c, i) => (
+                <li
+                  key={c.label}
+                  className={
+                    i === 0
+                      ? "grid grid-cols-[3rem_1fr] items-baseline gap-x-6 border-t border-rule py-8 sm:grid-cols-[4rem_1fr]"
+                      : "grid grid-cols-[3rem_1fr] items-baseline gap-x-6 border-t border-rule-soft py-8 sm:grid-cols-[4rem_1fr]"
+                  }
+                >
+                  <span className="font-mono text-[11px] tabular-nums text-fg-faint">
+                    {c.label}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-fg-primary">
+                      {c.title}
+                    </h3>
+                    <p className="mt-2 max-w-prose text-fg-secondary">
+                      {c.body}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-white/5 bg-white/[0.02]">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 py-12 sm:grid-cols-3">
-          {metrics.map((m) => (
-            <div key={m.label} className="text-center sm:text-left">
-              <p className="font-heading text-3xl font-bold text-white sm:text-4xl">
-                {m.value}
+      {/* CTA — a typographic statement, not a centered hero clone */}
+      <section>
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-fg-muted">
+                §2 Get started
               </p>
-              <p className="mt-1 text-sm text-gray-400">{m.label}</p>
+              <p className="mt-4 max-w-2xl font-display text-2xl font-medium leading-snug tracking-tight text-fg-primary sm:text-3xl">
+                Spin up a workspace, connect one source, and have a real
+                read-out by lunch. No procurement call. No demo.
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Everything you need to ship insights.
-          </h2>
-          <p className="mt-4 text-base text-gray-400">
-            Built for product, growth, and data teams who want answers in
-            seconds, not sprints.
-          </p>
-        </div>
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((f) => (
-            <div
-              key={f.name}
-              className="group rounded-xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]"
-            >
-              <span className="inline-flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-500 text-white shadow-sm">
-                <f.icon className="size-5" aria-hidden="true" />
-              </span>
-              <h3 className="mt-5 font-heading text-base font-semibold text-white">
-                {f.name}
-              </h3>
-              <p className="mt-2 text-sm text-gray-400">{f.description}</p>
+            <div className="flex items-end gap-4 lg:col-span-5">
+              <Link
+                href={siteConfig.baseLinks.signup}
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-fg-primary px-5 py-2.5 text-sm font-medium text-fg-inverted transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-on)]"
+              >
+                Open a workspace
+                <RiArrowRightLine className="size-4" aria-hidden="true" />
+              </Link>
+              <Link
+                href={siteConfig.baseLinks.login}
+                className="inline-flex min-h-11 items-center text-sm font-medium text-fg-secondary underline-offset-4 hover:text-fg-primary hover:underline"
+              >
+                Or sign in &rarr;
+              </Link>
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden border-t border-white/5">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-violet-600/15 via-transparent to-indigo-600/15"
-        />
-        <div className="relative mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
-          <h2 className="font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Start with the test workspace.
-          </h2>
-          <p className="mt-4 text-gray-300">
-            Sign up in under a minute, or sign in with the demo account to
-            explore the full dashboard.
-          </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href={siteConfig.baseLinks.signup}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-semibold text-nova-ink shadow-sm transition hover:bg-gray-100 sm:w-auto"
-            >
-              Create your account
-              <RiArrowRightLine className="size-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href={siteConfig.baseLinks.login}
-              className="text-sm font-medium text-gray-300 hover:text-white"
-            >
-              Sign in instead &rarr;
-            </Link>
           </div>
         </div>
       </section>
