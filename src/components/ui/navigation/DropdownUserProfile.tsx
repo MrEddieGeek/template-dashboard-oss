@@ -14,6 +14,7 @@ import {
   DropdownMenuSubMenuTrigger,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
+import { signoutAction } from "@/app/(auth)/actions"
 import {
   RiArrowRightUpLine,
   RiComputerLine,
@@ -26,11 +27,13 @@ import * as React from "react"
 export type DropdownUserProfileProps = {
   children: React.ReactNode
   align?: "center" | "start" | "end"
+  email?: string
 }
 
 export function DropdownUserProfile({
   children,
   align = "start",
+  email,
 }: DropdownUserProfileProps) {
   const [mounted, setMounted] = React.useState(false)
   const { theme, setTheme } = useTheme()
@@ -46,7 +49,7 @@ export function DropdownUserProfile({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
         <DropdownMenuContent align={align}>
-          <DropdownMenuLabel>emma.stone@acme.com</DropdownMenuLabel>
+          <DropdownMenuLabel>{email ?? "Account"}</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuSubMenu>
               <DropdownMenuSubMenuTrigger>Theme</DropdownMenuSubMenuTrigger>
@@ -117,7 +120,13 @@ export function DropdownUserProfile({
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <form action={signoutAction}>
+              <DropdownMenuItem asChild>
+                <button type="submit" className="w-full text-left">
+                  Sign out
+                </button>
+              </DropdownMenuItem>
+            </form>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>

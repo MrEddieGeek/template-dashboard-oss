@@ -9,7 +9,6 @@ const inter = Inter({
   variable: "--font-inter",
 })
 
-import { Sidebar } from "@/components/ui/navigation/sidebar"
 import { siteConfig } from "./siteConfig"
 
 export const metadata: Metadata = {
@@ -53,12 +52,9 @@ export default function RootLayout({
         className={`${inter.className} overflow-y-scroll scroll-auto antialiased selection:bg-indigo-100 selection:text-indigo-700 dark:bg-gray-950`}
         suppressHydrationWarning
       >
-        <div className="mx-auto max-w-screen-2xl">
-          <ThemeProvider defaultTheme="system" attribute="class">
-            <Sidebar />
-            <main className="lg:pl-72">{children}</main>
-          </ThemeProvider>
-        </div>
+        <ThemeProvider defaultTheme="system" attribute="class">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
