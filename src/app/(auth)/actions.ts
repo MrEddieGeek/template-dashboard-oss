@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import { validateCredentials } from "@/lib/auth/validation"
+import { isSafeRelativePath } from "@/lib/auth/redirect"
 
 export async function loginAction(formData: FormData) {
   const result = validateCredentials(formData)
@@ -22,7 +23,7 @@ export async function loginAction(formData: FormData) {
   }
 
   const redirectTo = String(formData.get("redirectTo") ?? "/dashboard")
-  redirect(redirectTo.startsWith("/") ? redirectTo : "/dashboard")
+  redirect(isSafeRelativePath(redirectTo) ? redirectTo : "/dashboard")
 }
 
 export async function signupAction(formData: FormData) {
