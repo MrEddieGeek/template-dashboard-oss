@@ -14,7 +14,6 @@ import {
   DropdownMenuSubMenuTrigger,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
-import { signoutAction } from "@/app/(auth)/actions"
 import { createSupabaseBrowserClient } from "@/lib/supabase/client"
 import {
   RiComputerLine,
@@ -22,6 +21,7 @@ import {
   RiSunLine,
 } from "@remixicon/react"
 import { useTheme } from "next-themes"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 
 export type DropdownUserProfileProps = {
@@ -35,8 +35,21 @@ export function DropdownUserProfile({
 }: DropdownUserProfileProps) {
   const [mounted, setMounted] = React.useState(false)
   const [email, setEmail] = React.useState<string | null>(null)
+  const [signingOut, setSigningOut] = React.useState(false)
   const { theme, setTheme } = useTheme()
+  const router = useRouter()
   const supabase = React.useMemo(() => createSupabaseBrowserClient(), [])
+
+  const handleSignOut = React.useCallback(async () => {
+    if (signingOut) return
+    setSigningOut(true)
+    try {
+      await supabase.auth.signOut()
+    } finally {
+      router.replace("/")
+      router.refresh()
+    }
+  }, [router, signingOut, supabase])
 
   React.useEffect(() => {
     setMounted(true)
@@ -108,13 +121,15 @@ export function DropdownUserProfile({
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <form action={signoutAction}>
-              <DropdownMenuItem asChild>
-                <button type="submit" className="w-full text-left">
-                  Sign out
-                </button>
-              </DropdownMenuItem>
-            </form>
+            <DropdownMenuItem
+              onSelect={(event) => {
+                event.preventDefault()
+                void handleSignOut()
+              }}
+              disabled={signingOut}
+            >
+              {signingOut ? "Signing out…" : "Sign out"}
+            </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
