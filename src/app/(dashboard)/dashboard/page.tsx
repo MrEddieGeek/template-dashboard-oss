@@ -17,11 +17,11 @@ const categories: {
   type: "currency" | "unit"
 }[] = [
   {
-    title: "Rows read",
+    title: "Data Processed",
     type: "unit",
   },
   {
-    title: "Rows written",
+    title: "API Calls",
     type: "unit",
   },
   {
@@ -29,15 +29,15 @@ const categories: {
     type: "unit",
   },
   {
-    title: "Payments completed",
+    title: "Revenue",
     type: "currency",
   },
   {
-    title: "Sign ups",
+    title: "Sign Ups",
     type: "unit",
   },
   {
-    title: "Logins",
+    title: "Active Sessions",
     type: "unit",
   },
 ]
@@ -52,14 +52,14 @@ export type KpiEntry = {
 
 const data: KpiEntry[] = [
   {
-    title: "Rows read",
+    title: "Data Processed",
     percentage: 48.1,
     current: 48.1,
     allowed: 100,
     unit: "M",
   },
   {
-    title: "Rows written",
+    title: "API Calls",
     percentage: 78.3,
     current: 78.3,
     allowed: 100,

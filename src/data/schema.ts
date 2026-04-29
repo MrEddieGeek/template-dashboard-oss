@@ -9,10 +9,10 @@ export type Usage = {
 
 export type OverviewData = {
   date: string
-  "Rows written": number
-  "Rows read": number
+  "API Calls": number
+  "Data Processed": number
   Queries: number
-  "Payments completed": number
-  "Sign ups": number
-  Logins: number
+  "Revenue": number
+  "Sign Ups": number
+  "Active Sessions": number
 }
