@@ -7,12 +7,11 @@ export const siteConfig = {
   baseLinks: {
     home: "/",
     landing: "/",
-    overview: "/overview",
-    details: "/details",
-    settings: "/settings",
     login: "/login",
     signup: "/signup",
     dashboard: "/dashboard",
+    details: "/dashboard/details",
+    settings: "/dashboard/settings",
   },
 }
 

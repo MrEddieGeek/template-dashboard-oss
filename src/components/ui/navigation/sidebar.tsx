@@ -18,7 +18,11 @@ import {
 import { UserProfileDesktop, UserProfileMobile } from "./UserProfile"
 
 const navigation = [
-  { name: "Overview", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
+  {
+    name: "Dashboard",
+    href: siteConfig.baseLinks.dashboard,
+    icon: RiHome2Line,
+  },
   { name: "Details", href: siteConfig.baseLinks.details, icon: RiListCheck },
   {
     name: "Settings",
@@ -53,10 +57,10 @@ const shortcuts = [
 export function Sidebar() {
   const pathname = usePathname()
   const isActive = (itemHref: string) => {
-    if (itemHref === siteConfig.baseLinks.settings) {
-      return pathname.startsWith("/settings")
+    if (itemHref === siteConfig.baseLinks.dashboard) {
+      return pathname === itemHref
     }
-    return pathname === itemHref || pathname.startsWith(itemHref)
+    return pathname === itemHref || pathname.startsWith(itemHref + "/")
   }
   return (
     <>

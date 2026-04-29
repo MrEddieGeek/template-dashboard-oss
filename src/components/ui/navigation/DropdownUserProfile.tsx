@@ -15,8 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
 import { signoutAction } from "@/app/(auth)/actions"
+import { createSupabaseBrowserClient } from "@/lib/supabase/client"
 import {
-  RiArrowRightUpLine,
   RiComputerLine,
   RiMoonLine,
   RiSunLine,
@@ -27,19 +27,31 @@ import * as React from "react"
 export type DropdownUserProfileProps = {
   children: React.ReactNode
   align?: "center" | "start" | "end"
-  email?: string
 }
 
 export function DropdownUserProfile({
   children,
   align = "start",
-  email,
 }: DropdownUserProfileProps) {
   const [mounted, setMounted] = React.useState(false)
+  const [email, setEmail] = React.useState<string | null>(null)
   const { theme, setTheme } = useTheme()
+  const supabase = React.useMemo(() => createSupabaseBrowserClient(), [])
+
   React.useEffect(() => {
     setMounted(true)
-  }, [])
+    supabase.auth.getUser().then(({ data }) => {
+      setEmail(data.user?.email ?? null)
+    })
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setEmail(session?.user?.email ?? null)
+      },
+    )
+    return () => {
+      listener.subscription.unsubscribe()
+    }
+  }, [supabase])
 
   if (!mounted) {
     return null
@@ -93,30 +105,6 @@ export function DropdownUserProfile({
                 </DropdownMenuRadioGroup>
               </DropdownMenuSubMenuContent>
             </DropdownMenuSubMenu>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              Changelog
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Documentation
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Join Slack community
-              <RiArrowRightUpLine
-                className="mb-1 ml-1 size-2.5 shrink-0 text-gray-500"
-                aria-hidden="true"
-              />
-            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
