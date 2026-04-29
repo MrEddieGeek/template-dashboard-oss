@@ -1,72 +1,92 @@
-<br />
-<div align="center">
+# Nova Analytics
 
-<h1 align="center">
-  Tremor – Dashboard Template
-</h1>
+> Illuminate Your Data.
 
-<h3 align="center">
-  <a href="https://dashboard-oss.tremor.so/overview">Preview OSS version</a> |
-  <a href="https://dashboard.tremor.so/overview">Preview full version</a> |
-  <a href="https://blocks.tremor.so/templates">Get full version</a>
-</h3>
+Modern analytics dashboard built on Next.js, TypeScript, Tailwind CSS, and Supabase. Real-time charts, KPI cards, drill-down detail views, and a marketing landing page — all in one project, ready to deploy on Vercel.
 
-`Dashboard` is a SaaS application template from [Tremor](https://tremor.so). It's built
-using [`Tremor Raw`](https://raw.tremor.so/docs/getting-started/installation)
-and [Next.js](https://nextjs.org).
+## Stack
 
-<br />
-
-[![Tremor Banner](public/og_github.jpg)](https://dashboard-oss.tremor.so/overview)
-
-</div>
-
-<br />
+- **Framework**: Next.js 14 (App Router) + React 18 + TypeScript
+- **Styling**: Tailwind CSS 3 with a custom Nova Analytics palette (Plus Jakarta Sans for headings, Inter for body)
+- **Charts & primitives**: Recharts, Radix UI, Remix Icons
+- **Auth**: Supabase (email/password) via `@supabase/ssr`
+- **Deploy target**: Vercel
 
 ## Getting started
 
-1. Install the dependencies. We recommend using pnpm. If you want to use `npm`,
-   just replace `pnpm` with `npm`.
+1. **Install dependencies** (pnpm preferred — `corepack enable pnpm` if you don't have it):
+
+   ```bash
+   pnpm install
+   ```
+
+2. **Create a Supabase project** at [supabase.com](https://supabase.com), then copy the project URL and anon key from `Settings → API`.
+
+3. **Set environment variables**. Copy `.env.example` to `.env.local` and fill in your values:
+
+   ```bash
+   cp .env.example .env.local
+   # then edit .env.local
+   ```
+
+   Required variables:
+
+   | Variable                          | Description                              |
+   | --------------------------------- | ---------------------------------------- |
+   | `NEXT_PUBLIC_SUPABASE_URL`        | Your Supabase project URL                |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY`   | Your Supabase anon (public) API key      |
+
+4. **Run the dev server**:
+
+   ```bash
+   pnpm dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000).
+
+## Auth setup
+
+Email/password auth runs against Supabase. By default Supabase requires email confirmation on signup. For the demo you can disable that in `Authentication → Providers → Email → Confirm email` so signed-up users land in the dashboard immediately.
+
+### Demo credentials
+
+Pre-seed a test user in Supabase (`Authentication → Users → Add user`):
+
+| Email                       | Password         |
+| --------------------------- | ---------------- |
+| `admin@novaanalytics.io`    | `NovaDemo2025!`  |
+
+## Routes
+
+| Path        | Description                              |
+| ----------- | ---------------------------------------- |
+| `/`         | Marketing landing page (public)          |
+| `/login`    | Sign-in form                             |
+| `/signup`   | Sign-up form                             |
+| `/dashboard`| Authenticated dashboard (protected)      |
+| `/api/health` | JSON health check                      |
+
+Middleware redirects any unauthenticated request to `/dashboard/*` back to `/login`.
+
+## Deployment
+
+Recommended: import the repo into Vercel and set the two `NEXT_PUBLIC_SUPABASE_*` environment variables in the project settings. Vercel detects Next.js automatically and sets up HTTPS + preview deploys with no extra config.
 
 ```bash
-pnpm install
+# or via CLI
+pnpm dlx vercel --prod
 ```
 
-2. Then, start the development server:
+## Scripts
 
-```bash
-pnpm run dev
-```
-
-3. Visit [http://localhost:3000](http://localhost:3000) in your browser to view
-   the template.
-
-## Notes
-
-This project uses
-[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
-automatically optimize and load Inter, a custom Google Font.
-
-This project uses
-[`Tremor Raw`](https://raw.tremor.so/docs/getting-started/installation)
-components for the UI.
+| Command         | Description                            |
+| --------------- | -------------------------------------- |
+| `pnpm dev`      | Run the dev server                     |
+| `pnpm build`    | Production build                       |
+| `pnpm start`    | Serve the production build locally     |
+| `pnpm lint`     | Lint with the Next.js ESLint preset    |
+| `pnpm test`     | Run the Vitest suite                   |
 
 ## License
 
-This site template is licensed under the
-[Apache 2.0 License](https://github.com/tremorlabs/tremor-dashboard-template?tab=License-1-ov-file#readme).
-
-## Learn more
-
-For a deeper understanding of the technologies used in this template, check out
-the resources listed below:
-
-- [Tremor Raw](https://raw.tremor.so) - Tremor Raw documentation
-- [Tailwind CSS](https://tailwindcss.com) - A utility-first CSS framework
-- [Next.js](https://nextjs.org/docs) - Next.js documentation
-- [Radix UI](https://www.radix-ui.com) - Radix UI Website
-- [Recharts](https://recharts.org) - Recharts documentation and website
-
----
-
-Copyright © 2024 Tremor Labs, Inc. All rights reserved.
+This project is built on top of the open-source [`tremorlabs/template-dashboard-oss`](https://github.com/tremorlabs/template-dashboard-oss) starter (Apache 2.0). UI primitives retain their original attribution headers in source.

@@ -5,6 +5,22 @@ const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      colors: {
+        nova: {
+          primary: "#6366F1",
+          secondary: "#8B5CF6",
+          accent: "#06B6D4",
+          ink: "#0F172A",
+          cream: "#F8FAFC",
+          success: "#10B981",
+          warning: "#F59E0B",
+          error: "#EF4444",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-jakarta)", "system-ui", "sans-serif"],
+      },
       keyframes: {
         hide: {
           from: { opacity: "1" },
@@ -41,6 +57,10 @@ const config: Config = {
           from: { opacity: "0", transform: "translateX(50%)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
+        fadeInUp: {
+          from: { opacity: "0", transform: "translateY(12px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         hide: "hide 150ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -57,6 +77,7 @@ const config: Config = {
           "dialogOverlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         dialogContentShow:
           "dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        fadeInUp: "fadeInUp 600ms cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

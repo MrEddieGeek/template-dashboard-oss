@@ -600,11 +600,7 @@ const SingleDatePicker = ({
   }, [value, defaultValue])
 
   return (
-    <PopoverPrimitives.Root
-      tremor-id="tremor-raw"
-      open={open}
-      onOpenChange={onOpenChange}
-    >
+    <PopoverPrimitives.Root open={open} onOpenChange={onOpenChange}>
       <Trigger
         placeholder={placeholder}
         disabled={disabled}
@@ -902,11 +898,7 @@ const RangeDatePicker = ({
   }
 
   return (
-    <PopoverPrimitives.Root
-      tremor-id="tremor-raw"
-      open={open}
-      onOpenChange={onOpenChange}
-    >
+    <PopoverPrimitives.Root open={open} onOpenChange={onOpenChange}>
       <Trigger
         placeholder={placeholder}
         disabled={disabled}

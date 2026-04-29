@@ -9,6 +9,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/Drawer"
+import { NovaLogo } from "@/components/ui/icons/NovaLogo"
 import { cx, focusRing } from "@/lib/utils"
 import {
   RiHome2Line,
@@ -78,7 +79,8 @@ export default function MobileSidebar() {
         </DrawerTrigger>
         <DrawerContent className="sm:max-w-lg">
           <DrawerHeader>
-            <DrawerTitle>Retail Analytics</DrawerTitle>
+            <DrawerTitle className="sr-only">{siteConfig.name}</DrawerTitle>
+            <NovaLogo className="h-7 text-gray-900 dark:text-gray-50" />
           </DrawerHeader>
           <DrawerBody>
             <nav
